@@ -30,9 +30,23 @@ Object.defineProperty(Person,"age",{
 })
 
 /**
- * 构造函数创建对象
+ * 工厂模式创建对象
  */
+function createPerson(name, age, job){
+    var o = new Object();
+    o.name = name;
+    o.age = age;
+    o.job = job;
+    o.sayName = function(){
+        console.log(this.name)
+    }
+    return o;
+}
+var person_1 = createPerson('SAHX',26,'enginer')
 
+/**
+ * 构造函数模式创建对象
+ */
 function Person(name, age, job) {
     this.name = name;
     this.age = age;
@@ -41,4 +55,4 @@ function Person(name, age, job) {
         console.log(this.name)
     }
 }
-var person_1 = new Person('SAHX',26,'enginer')
+var person_2 = new Person('SAHX',26,'enginer')
