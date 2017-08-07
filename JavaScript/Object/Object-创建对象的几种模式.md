@@ -15,8 +15,8 @@ function createPerson(name,age,job){
 var person1 = createPerson('luce',26,'software engineer')
 ```
 
-工厂模式的缺点：
-	没法解决对象识别的问题（即怎样知道一个对象的类型）
+##### 工厂模式的缺点：
+没法解决对象识别的问题（即怎样知道一个对象的类型）
 
 ### 二、构造函数模式
 
@@ -59,3 +59,18 @@ var person1 = new Person('luce',25,'doctor')
 
 构造函数与其他函数的唯一区别，就在于调用它们的方式不同。构造函数也是函数，不存在定义构造函数的特殊语法。任何函数，只要通过new操作符来调用，那它就可以作为构造函数；而任何函数，如果不通过new操作符来调用，那它跟普通的函数没有什么两样。
 
+##### 构造函数模式的缺点：
+每个方法都要在每个实例上重新创建一遍，不同实例上的同名函数是不相等的。可以通过把函数定义转义到构造函数外部解决这个问题：
+```javascript
+function Person(name,age,job){
+    this.name = name;
+    this.age = age;
+    this.sayName = sayName;
+}
+
+function sayName(){
+    console.log(this.name)
+}
+var person1 = new Person('Tom',23,'Engineer')
+var person2 = new Person('june',25,'Doctor')
+```
