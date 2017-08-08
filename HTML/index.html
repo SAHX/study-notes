@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>DIV带尖角</title>
+    <style>
+        .demo {
+            width: 100px;
+            height: 30px;
+            background-color: #fff;
+            border: 2px #000 solid;
+            border-radius: 5px;
+            position: relative;
+            margin: 30px;
+        }
+
+        .demo::before {
+            content: ' ';
+            width: 0;
+            height: 0;
+            border: solid transparent;
+            right: 100%;
+            top: 7px;
+            position: absolute;
+            border-width: 8px;
+            border-right-color: #000;
+        }
+        
+        .demo::after {
+            content: ' ';
+            width: 0;
+            height: 0;
+            border: solid transparent;
+            top:10px;
+            right: 100%;
+            position: absolute;
+            border-width: 5px;
+            border-right-color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="demo">
+
+    </div>
+</body>
+
+</html>
