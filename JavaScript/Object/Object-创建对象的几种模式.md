@@ -76,7 +76,7 @@ var person1 = new Person('Tom',23,'Engineer')
 var person2 = new Person('june',25,'Doctor')
 ```
 
-### 原型模式
+### 三、原型模式
 我们创建的每个函数都有一个prototype（原型）属性，这个属性是一个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。大白话就是，prototype就是通过调用构造函数而创建的那个对象实例的原型对象，这个原型对象让所有使用该构造函数创建的对象实例共享它的属性和方法。
 
 这样的话，就不必在构造函数中定义对象实例的信息，而是直接将这些信息直接添加到原型对象中：
@@ -155,6 +155,44 @@ Person.prototype = {
 	job: 'Engineer',
 	sayName: function(){
 		console.log(this.name)
+	}
+}
+```
+#### 4. 原型的动态性
+由于在原型中查找值的过程是一次搜索，因此我们对原型对象所做的任何修改都能够立即从实例上反映出来，即使是先创建了实例后修改原型也照样如此。
+
+但是如果是重写整个原型对象，那么情况就不一样了。我们知道，调用构造函数时会为实例添加一个指向最初原始的[[Prototype]]指针，而把原型修改为另一个对象就等于切断了构造函数与最初原型之间的联系。请记住：实例中的指针仅指向原型，而不指向构造函数。
+
+### 四、组合使用构造函数模式和原型模式
+*这是一种最常见的创建对象的模式。*构造函数模式用于定义实例的属性，而原型模式用于定义方法和共享的属性。结果，每个实例都会有自己的一份实例属性的副本，但同时又共享着对方法的引用，最大限度地节省了内存。另外，这种混成模式还支持向构造函数传递参数，可谓是集两种模式之长。
+```javascript
+function Person(name,age,job){
+	this.name = name;
+	this.age = age;
+	this.job = job;
+	this.friends = ["Shelyby","Court"];
+}
+
+Person.prototype = {
+	constructor: Person,
+	sayName = function(){
+		console.log(this.name);
+	}
+}
+```
+
+### 五、动态原型模式
+有其它OO语言经验的开发人员在看到独立的构造函数和原型时，很可能感到困惑。动态原型模式正式致力于解决这个问题的一个方案，它把所有信息都封装在了构造函数中，而通过在构造函数中初始化原型（仅在必要的情况下），又保持了同时使用构造函数和原型的有点。换句话说，可以通过检查某个应该存在的方法是否有效，来决定是否需要初始化原型。
+```javascript
+function Person(name,age,job){
+	this.name = name;
+	this.age = age;
+	this.job = job;
+
+	if(typeof this.sayName != 'function'){
+		Person.prototype.sayName = function(){
+			console.log(this.name)
+		}
 	}
 }
 ```
