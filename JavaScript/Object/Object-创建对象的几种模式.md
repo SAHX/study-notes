@@ -77,7 +77,7 @@ var person2 = new Person('june',25,'Doctor')
 ```
 
 ### 原型模式
-我们创建的每个函数都有一个prototype（原型）属性，这个属性是一个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。大白话就是，prototype就是通过调用构造函数而创建的那个对象实例的原型对象，这个原型对象让所有使用该构造函数创建的对象实例共享它的属性和方法。
+我们创建的每个函数都有一个prototype（原型）属性，这个属性是一个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。大白话就是，prototype就是通过调用构造函数而创建的那个对象实例的原型对象，这个原型对象让所有使用该构造函数创建的对象实例共享它的属性和方法。
 
 这样的话，就不必在构造函数中定义对象实例的信息，而是直接将这些信息直接添加到原型对象中：
 ```javascript
@@ -108,7 +108,7 @@ console.log(person1.sayName == person2.sayName) //true
 
 该图展示了Person构造函数、Person的原型属性以及Person现有的两个实例之间的关系。在此，Person.prototype指向了原型对象，而Person.prototype.constructor又指回了Person。Person的每个实例———person1和person2都包含一个内部属性，该属性仅仅指向了Person.prototype；换句话说，它们与构造函数没有直接的关系。此外，要格外注意的是，虽然这两个实例都不包含属性和方法，但我们却可以调用person1.sayName(),这是通过查找对象属性的过程来实现的。
 
-可以通过Object.getPrototypeOf()来获取实例中的内部属性[[Prototype]]:
+可以通过Object.getPrototypeOf()来获取实例中的内部属性[[Prototype]]:
 ```JavaScript
 console.log(Object.getPrototypeOf(person1) == Person.prototype); // true
 
@@ -127,7 +127,7 @@ console.log(person1.hasOwnProperty('name')); //false
 #### 2. 原型于 in 操作符
 有两种方式使用 in 操作符：单独使用和在 for-in 循环中使用。在单独使用时，in 操作符会在通过对象能够访问给定属性时返回 true，无论该属性存在于实例中还是原型中。在使用 for-in 循环是，返回的是所有能够通过对象访问的、可枚举的属性，其中既包括存在于实例中的属性，也包括存在于原型中的属性。
 
-要取得对象上所有可枚举的*实例属性*，可以使用Object.keys()方法。这个方法接收一个对象作为参数，返回一个包含所有可枚举属性的字符串数组。
+要取得对象上所有可枚举的*实例属性*，可以使用Object.keys()方法。这个方法接收一个对象作为参数，返回一个包含所有可枚举属性的字符串数组。
 
 #### 3. 更简单的原型语法
 ```javascript
