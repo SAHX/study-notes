@@ -109,7 +109,7 @@ console.log(person1.sayName == person2.sayName) //true
 该图展示了Person构造函数、Person的原型属性以及Person现有的两个实例之间的关系。在此，Person.prototype指向了原型对象，而Person.prototype.constructor又指回了Person。Person的每个实例———person1和person2都包含一个内部属性，该属性仅仅指向了Person.prototype；换句话说，它们与构造函数没有直接的关系。此外，要格外注意的是，虽然这两个实例都不包含属性和方法，但我们却可以调用person1.sayName(),这是通过查找对象属性的过程来实现的。
 
 可以通过Object.getPrototypeOf()来获取实例中的内部属性[[Prototype]]:
-```
+```JavaScript
 console.log(Object.getPrototypeOf(person1) == Person.prototype); // true
 
 console.log(Object.getPrototypeOf(person1).name); //"Nicholas"
@@ -128,3 +128,33 @@ console.log(person1.hasOwnProperty('name')); //false
 有两种方式使用 in 操作符：单独使用和在 for-in 循环中使用。在单独使用时，in 操作符会在通过对象能够访问给定属性时返回 true，无论该属性存在于实例中还是原型中。在使用 for-in 循环是，返回的是所有能够通过对象访问的、可枚举的属性，其中既包括存在于实例中的属性，也包括存在于原型中的属性。
 
 要取得对象上所有可枚举的*实例属性*，可以使用Object.keys()方法。这个方法接收一个对象作为参数，返回一个包含所有可枚举属性的字符串数组。
+
+#### 3. 更简单的原型语法
+```javascript
+function Person(){}
+
+Person.prototype = {
+	name: 'Nicholas',
+	age: 28,
+	job: 'Engineer',
+	sayName: function(){
+		console.log(this.name)
+	}
+}
+```
+上面的代码，我们将Person.prototype设置为定于一个以对象字面量形式创建的新对象。最终结果相同，但是有一个列外：constructor的属性不再指向Person。前面曾经介绍过，每创建一个函数，就会同时创建它的prototype对象，这个对象也会自动获得constructor属性。而我们在这里使用个语法，本质上完全重写了默认的prototype对象，因此，constructor的属性也就变成了新对象的constructor属性（指向Object构造函数），不再指向Person函数。
+
+如果constructor真的很重要，可以特意将它设置回适当的值：
+```javascript
+function Person(){}
+
+Person.prototype = {
+	constructor: Person,
+	name: 'Nicholas',
+	age: 28,
+	job: 'Engineer',
+	sayName: function(){
+		console.log(this.name)
+	}
+}
+```
